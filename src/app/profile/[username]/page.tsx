@@ -6,7 +6,8 @@ import { ContentImage } from "@/components/shared/content-image";
 import { TaskPostCard } from "@/components/shared/task-post-card";
 import { Button } from "@/components/ui/button";
 import { SchemaJsonLd } from "@/components/seo/schema-jsonld";
-import { ArrowLeft, Globe, Sparkles } from "lucide-react";
+import { ShareButton } from "@/components/tasks/share-button";
+import { ArrowLeft, Globe, Sparkles, UserPlus, Share2 } from "lucide-react";
 import { buildPostMetadata, buildTaskMetadata } from "@/lib/seo";
 import { fetchTaskPostBySlug, fetchTaskPosts } from "@/lib/task-data";
 import { SITE_CONFIG } from "@/lib/site-config";
@@ -112,14 +113,29 @@ export default async function ProfileDetailPage({ params }: { params: Promise<{ 
       <main className="mx-auto w-full max-w-6xl px-4 pb-16 pt-10 sm:px-6 lg:px-8">
         <SchemaJsonLd data={breadcrumbData} />
         <section className="mb-8 overflow-hidden rounded-[2rem] border border-white/55 bg-[linear-gradient(130deg,#0d366f_6%,#0e75c7_48%,#16b8dc_100%)] p-7 text-white shadow-[0_22px_70px_rgba(13,32,62,0.34)] sm:p-8">
-          <Link href="/profile" className="inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/10 px-4 py-2 text-sm font-medium hover:bg-white/20">
-            <ArrowLeft className="h-4 w-4" />
-            Back to Profiles
-          </Link>
-          <p className="mt-5 inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em]">
-            <Sparkles className="h-4 w-4" />
-            Profile detail
-          </p>
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <Link href="/profile" className="inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/10 px-4 py-2 text-sm font-medium hover:bg-white/20">
+              <ArrowLeft className="h-4 w-4" />
+              Back to Profiles
+            </Link>
+            <div className="flex items-center gap-3">
+              <Button
+                asChild
+                variant="outline"
+                size="sm"
+                className="inline-flex items-center gap-2 border-white/35 bg-white/10 text-white hover:bg-white/20"
+              >
+                <Link href="/login">
+                  <UserPlus className="h-4 w-4" />
+                  Follow
+                </Link>
+              </Button>
+              <ShareButton 
+                url={`${baseUrl}/profile/${post.slug}`}
+                title={brandName}
+              />
+            </div>
+          </div>
           <h1 className="mt-4 text-4xl font-semibold tracking-[-0.03em] sm:text-5xl">{brandName}</h1>
           {domain ? <p className="mt-2 inline-flex items-center gap-2 text-sm text-slate-100"><Globe className="h-4 w-4" />{domain}</p> : null}
         </section>
@@ -159,47 +175,6 @@ export default async function ProfileDetailPage({ params }: { params: Promise<{ 
           </div>
         </section>
 
-        {suggestedProfiles.length ? (
-          <section className="mt-12">
-            <div className="flex items-center justify-between">
-              <h2 className="text-xl font-semibold text-foreground">More profiles</h2>
-              <Link href="/profile" className="text-sm font-medium text-primary hover:underline">
-                View all
-              </Link>
-            </div>
-            <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {suggestedProfiles.map((profile) => (
-                <TaskPostCard
-                  key={profile.id}
-                  post={profile}
-                  href={`/profile/${profile.slug}`}
-                  taskKey="profile"
-                  compact
-                />
-              ))}
-            </div>
-            <nav className="mt-6 rounded-2xl border border-slate-200 bg-white p-4 shadow-[0_8px_24px_rgba(15,23,42,0.06)]">
-              <p className="text-sm font-semibold text-foreground">Related links</p>
-              <ul className="mt-2 space-y-2 text-sm">
-                {suggestedProfiles.map((profile) => (
-                  <li key={`related-${profile.id}`}>
-                    <Link
-                      href={`/profile/${profile.slug}`}
-                      className="text-primary underline-offset-4 hover:underline"
-                    >
-                      {profile.title}
-                    </Link>
-                  </li>
-                ))}
-                <li>
-                  <Link href="/profile" className="text-primary underline-offset-4 hover:underline">
-                    Browse all profiles
-                  </Link>
-                </li>
-              </ul>
-            </nav>
-          </section>
-        ) : null}
       </main>
       <Footer />
     </div>
