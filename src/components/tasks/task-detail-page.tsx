@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Globe, Mail, MapPin, Phone, Sparkles, Tag } from "lucide-react";
+import { ArrowLeft, Globe, Mail, MapPin, Phone, Sparkles, Tag, UserPlus, Share2 } from "lucide-react";
 import { ContentImage } from "@/components/shared/content-image";
 import { NavbarShell } from "@/components/shared/navbar-shell";
 import { Footer } from "@/components/shared/footer";
@@ -11,6 +11,7 @@ import { buildPostUrl, fetchTaskPostBySlug, fetchTaskPosts } from "@/lib/task-da
 import { SITE_CONFIG, getTaskConfig, type TaskKey } from "@/lib/site-config";
 import type { SitePost } from "@/lib/site-connector";
 import { TaskImageCarousel } from "@/components/tasks/task-image-carousel";
+import { ShareButton } from "@/components/tasks/share-button";
 import { cn } from "@/lib/utils";
 import { ArticleComments } from "@/components/tasks/article-comments";
 import { SchemaJsonLd } from "@/components/seo/schema-jsonld";
@@ -254,17 +255,32 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
         <SchemaJsonLd data={schemaPayload} />
 
         <section className="mb-8 overflow-hidden rounded-[2rem] border border-white/55 bg-[linear-gradient(130deg,#0d366f_6%,#0e75c7_48%,#16b8dc_100%)] p-7 text-white shadow-[0_22px_70px_rgba(13,32,62,0.34)] sm:p-8">
-          <Link
-            href={taskConfig?.route || "/"}
-            className="inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/10 px-4 py-2 text-sm font-medium text-white hover:bg-white/20"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to {taskConfig?.label || "posts"}
-          </Link>
-          <p className="mt-5 inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em]">
-            <Sparkles className="h-4 w-4" />
-            {taskConfig?.label || task}
-          </p>
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <Link
+              href={taskConfig?.route || "/"}
+              className="inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/10 px-4 py-2 text-sm font-medium text-white hover:bg-white/20"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back to {taskConfig?.label || "posts"}
+            </Link>
+            <div className="flex items-center gap-3">
+              <Button
+                asChild
+                variant="outline"
+                size="sm"
+                className="inline-flex items-center gap-2 border-white/35 bg-white/10 text-white hover:bg-white/20"
+              >
+                <Link href="/login">
+                  <UserPlus className="h-4 w-4" />
+                  Follow
+                </Link>
+              </Button>
+              <ShareButton 
+                url={`${SITE_CONFIG.baseUrl.replace(/\/$/, "")}${taskConfig?.route || "/posts"}/${post.slug}`}
+                title={post.title}
+              />
+            </div>
+          </div>
           <h1 className="mt-4 max-w-4xl text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">
             {post.title}
           </h1>
