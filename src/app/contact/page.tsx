@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { Clock3, Mail, MapPin, MessageSquareText, Phone, Sparkles } from 'lucide-react'
 import { NavbarShell } from '@/components/shared/navbar-shell'
 import { Footer } from '@/components/shared/footer'
@@ -80,14 +79,6 @@ export default function ContactPage() {
                 Send message
               </button>
             </form>
-            <div className="mt-6 rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
-              <p className="font-semibold text-slate-800">Direct contact</p>
-              <p className="mt-1 inline-flex items-center gap-2"><Mail className="h-4 w-4" /> support@{SITE_CONFIG.domain}</p>
-              <p className="mt-1 inline-flex items-center gap-2"><Phone className="h-4 w-4" /> +1 (555) 410-2042</p>
-              <p className="mt-3">
-                Need profile updates now? <Link href="/profile" className="font-semibold text-[#0f5fbe] hover:underline">Browse profiles</Link>
-              </p>
-            </div>
           </div>
         </section>
       </main>
