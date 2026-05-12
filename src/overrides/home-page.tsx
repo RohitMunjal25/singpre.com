@@ -82,10 +82,6 @@ export async function HomePageOverride() {
             <section className="mt-8 rounded-2xl border border-[#dddddd] bg-[#efefef] p-6 sm:p-8">
               <div className="flex items-end justify-between gap-4">
                 <h2 className="text-3xl font-semibold tracking-[-0.03em] text-[#222a33]">Users Latest Favorite Colors</h2>
-                <Link href="/profile" className="inline-flex items-center gap-2 text-sm font-semibold text-[#1e5fb3] hover:underline">
-                  Explore profiles
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
               </div>
               <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-7">
                 {favoriteColors.map((color) => (
